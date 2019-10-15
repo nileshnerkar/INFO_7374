@@ -2,4 +2,4 @@
 Product Grade Data Pipeline
 
 CLAAT Document for the project:
-https://codelabs-preview.appspot.com/?file_id=122NKbEZv5iqCL-y-2iS9wxQKDT5JLPRscPHvLpIMUQ8#0
+https://codelabs-preview.appspot.com/?file_id=16irdd6mysF2TldvokKYWMObODErsphyveBk7RUT4Q04#0
