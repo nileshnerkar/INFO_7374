@@ -130,7 +130,7 @@ def assign_datatypes(df):
     df['term'] = df['term'].apply(lambda x: x.replace(' months', '')).astype('int64')
     df['earliest_cr_line'] = pd.to_datetime(df['earliest_cr_line'])
     df['sec_app_earliest_cr_line'] = pd.to_datetime(df['sec_app_earliest_cr_line'])
-    df['zip_code'] = df['zip_code'].apply(lambda x: x.replace('x', '')).astype('category').cat.codes
+    df['zip_code'] = df['zip_code'].apply(lambda x: str(x).replace('x', '')).astype('category').cat.codes
     df['addr_state'] = df['addr_state'].apply(lambda x: x.strip()).astype('category').cat.codes
     df['application_type'] = df['application_type'].astype('category').cat.codes
     df['emp_length'] = df['emp_length'].astype('category').cat.codes
@@ -176,7 +176,8 @@ def impute_nulls(df):
                       'sec_app_mort_acc',
                       'sec_app_mths_since_last_major_derog',
                       'sec_app_num_rev_accts',
-                      'sec_app_revol_util']
+                      'sec_app_revol_util',
+                      'zip_code']
     # Datetimes to be imputed
     null_datetimes = ['sec_app_earliest_cr_line']
 

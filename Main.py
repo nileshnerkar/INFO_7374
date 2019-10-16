@@ -1,4 +1,5 @@
 import os
+import sys
 import pandas as pd
 from DataIngestor import DataIngestor
 from DataExtractor import DataExtractor
@@ -8,8 +9,29 @@ from AWSClient import AWSClient
 if __name__ == '__main__':
     
     #Get AWS id and access key from args or env variable
-    aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
-    aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
+    # aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
+    # aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
+    
+    if len(sys.argv[1:]) != 4 :
+        #Get AWS id and access key from args or env variable
+        print("Pass Arguments...!")
+        exit(1)
+    else:
+        count=0
+        for arg in sys.argv[1:]:
+            if count == 0:
+                aws_access_key_id = str(arg)
+            elif count == 1:
+                aws_secret_access_key = str(arg)
+            elif count == 2:
+                email = str(arg)
+            elif count == 3:
+                password = str(arg)
+            count += 1
+
+
+    # aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
+    # aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
     aws_client = AWSClient(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
     
     #Constants for Data Extraction
@@ -19,8 +41,8 @@ if __name__ == '__main__':
     
     #Parameters for lending club data scraping
     fileTag = "loanStatsFileNamesJS"
-    email=  os.environ['LENDING_CLUB_EMAIL'] #"nerkar.n@husky.neu.edu"
-    password= os.environ['LENDING_CLUB_PASSWORD']  #"nilesh77"
+    # email=  os.environ['LENDING_CLUB_EMAIL'] 
+    # password= os.environ['LENDING_CLUB_PASSWORD']
     
     #Extract Data from Lending Club URL
     de = DataExtractor(email, password)
