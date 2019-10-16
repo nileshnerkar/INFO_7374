@@ -2,4 +2,4 @@
 LENDING CLUB DATA ANALYSIS
 
 CLAAT Document for the project:
-https://codelabs-preview.appspot.com/?file_id=16irdd6mysF2TldvokKYWMObODErsphyveBk7RUT4Q04#0
+https://codelabs-preview.appspot.com/?file_id=16irdd6mysF2TldvokKYWMObODErsphyveBk7RUT4Q04#0 
