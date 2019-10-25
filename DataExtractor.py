@@ -29,16 +29,22 @@ class DataExtractor():
         path = "Data/DOWNLOAD_LOAN_DATA"
         os.makedirs(path, exist_ok=True)
         chrome_options = Options()
-        chrome_options.set_headless() 
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.set_headless()
 
-        browser = webdriver.Chrome(executable_path='.\SeleniumDriver\chromedriver.exe', chrome_options=chrome_options)
+        print('Logging into the site...')
+        browser = webdriver.Chrome(executable_path=r'/usr/local/bin/chromedriver', chrome_options=chrome_options)
         browser.get(LOGIN_URL)
 
         browser.find_element_by_name('email').send_keys(self.email)
         browser.find_element_by_name('password').send_keys(self.password)
         browser.find_element_by_class_name('form-button').click()
         time.sleep(5)
-        
+
+        print('Logged in & moving to Download Page...')
+
         browser.get(DOWNLOAD_URL)
         fileNamesDiv = browser.find_element_by_id(fileTag)
         
@@ -49,14 +55,16 @@ class DataExtractor():
         for fileName in loanStatsFileList:
             if fileName.split(".zip")[0][7:] not in existing_files:
                 fileurl = initial_path+fileName
+                print('Downloading file {}'.format(fileName))
                 res = requests.get(fileurl)
                 res.raise_for_status()
                 #print(res.headers)
                 if res.ok:
                     thefile = ZipFile(io.BytesIO(res.content))
+                    print('Extracting file {}'.format(fileName))
                     thefile.extractall(path)
                     thefile.close()
                 else:
                     print(res.status_code)
             else:
-                print("File Already Exists!")
+                print("File {} Already Exists!".format(fileName))

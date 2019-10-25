@@ -41,26 +41,31 @@ if __name__ == '__main__':
     
     #Parameters for lending club data scraping
     fileTag = "loanStatsFileNamesJS"
-    # email=  os.environ['LENDING_CLUB_EMAIL'] 
+    # email=  os.environ['LENDING_CLUB_EMAIL']
     # password= os.environ['LENDING_CLUB_PASSWORD']
-    
+
+    print('Downloading Files...')
     #Extract Data from Lending Club URL
     de = DataExtractor(email, password)
-    de.extractData(LOGIN_URL=LOGIN_URL, DOWNLOAD_URL=DOWNLOAD_URL, fileTag=fileTag)  
+    de.extractData(LOGIN_URL=LOGIN_URL, DOWNLOAD_URL=DOWNLOAD_URL, fileTag=fileTag)
 
+    print('Ingesting Data...')
     #Ingest Data into Pipeline
     di = DataIngestor(aws_client)    
 
     #Create Landing and Processed Buckets
-    LANDING_BUCKET = 'lending-club-landing-data-kp'
-    PROCESSED_BUCKET='lending-club-processed-data-kp'
-    
+    LANDING_BUCKET = 'lending-club-landing-data'
+    PROCESSED_BUCKET='lending-club-processed-data'
+
+    print('Creating Buckets...')
     di.createS3Bucket(LANDING_BUCKET)
     di.createS3Bucket(PROCESSED_BUCKET)
-    
+
+    print('Uploading Files...')
     #Upload Extracted Data to S3 bucket
     di.upload_fileobj(DIR_PATH, bucketName=LANDING_BUCKET)
-    
+
+    print('Pre-Processing Data...')
     #Data Pre-Processing
     dp = DataProcessor(aws_client, Landing_BucketName=LANDING_BUCKET, Processed_BucketName=PROCESSED_BUCKET)
     dp.process()

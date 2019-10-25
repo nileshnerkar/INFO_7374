@@ -62,9 +62,9 @@ class DataIngestor:
                 key = f'{yr_q[0:4]}/{yr_q[4:6]}/LoanStats.csv'
                 file_flag = False
                 if self.isUploadedToS3(bucketName=bucketName, key=key):
-                    print("Object already in S3:", key)
+                    print("Object already in S3: {}".format(key))
                 else:
-                    print("Uploading Object to S3:", key)
+                    print("Uploading Object to S3: {}".format(key))
                     with open(FILE_NAME, "rb") as f:
                         self.__client.upload_fileobj(f, bucketName, key)
 
@@ -105,7 +105,8 @@ class DataIngestor:
         returns Boolean value. True if key exists in given Bucket else False.
         """
         try:
-            self.__client.get_object(Bucket=bucketName, Key=key)
+            obj = self.__client.get_object(Bucket=bucketName, Key=key)
+            obj['Body'].read()
         except ClientError as e:
             #print(e.response)
             return int(e.response['ResponseMetadata']['HTTPStatusCode']) != 404
