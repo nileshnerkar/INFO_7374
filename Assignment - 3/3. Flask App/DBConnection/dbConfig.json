@@ -1,0 +1,7 @@
+{
+    "username":"kaushikparanjpe",
+    "password":"kaushikparanjpe",
+    "host":"image-dataset-pg.clql98u5hri6.us-east-1.rds.amazonaws.com",
+    "port":"5432",
+    "database":"imageDataset"
+}

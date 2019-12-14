@@ -1,0 +1,17 @@
+{% if content %}
+<img src="{{content.image_url}}" width="500" height="300">
+<br><br>
+<b>
+<p>
+    API Prediction:
+    {{content.api_res}}
+</p>
+
+<p>
+    MTURK:
+    {{content.mturk}}
+</p>
+</b>
+{% else %}
+<p>Could not find data</p>
+{% endif %}
