@@ -43,7 +43,7 @@ class DataProcessor:
         #Find file names to download which are not in processed bucket
         if len(landing_objects_list) != 0:
             for object in landing_objects_list:
-                if object not in processed_objects_list and '.csv' in object:
+                if (object not in processed_objects_list) and ('.csv' in object):
                     self.__list_of_files_to_download.append(object)
         else:
             print('No objects in the Landing Bucket')
